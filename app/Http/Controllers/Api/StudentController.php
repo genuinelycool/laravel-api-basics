@@ -58,8 +58,6 @@ class StudentController extends Controller
             "gender" => "sometimes|in:male,female,other"
         ]);
 
-        // print_r($request->all());die;
-
         $student->update($request->all());
 
         return response()->json([
@@ -71,8 +69,13 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Student $student)
     {
-        //
+        $student->delete();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Student deleted successfully"
+        ]);
     }
 }
