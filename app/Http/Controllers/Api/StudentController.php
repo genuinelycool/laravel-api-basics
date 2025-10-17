@@ -50,9 +50,22 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Student $student)
     {
-        //
+        $request->validate([
+            "name" => "sometimes|string",
+            "email" => "sometimes|email|unique:students,email," . $student->email,
+            "gender" => "sometimes|in:male,female,other"
+        ]);
+
+        // print_r($request->all());die;
+
+        $student->update($request->all());
+
+        return response()->json([
+            "status" => true,
+            "message" => "Student updated successfully"
+        ]);
     }
 
     /**
